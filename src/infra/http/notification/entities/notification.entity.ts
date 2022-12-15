@@ -1,5 +1,3 @@
-import { randomUUID } from 'node:crypto';
-
 interface CreateNotificationDto {
   id: string;
   recipientId: string;

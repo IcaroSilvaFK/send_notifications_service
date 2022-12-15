@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto';
+
 import { Content } from './content';
 import { Notification } from './notification';
 
@@ -6,7 +8,7 @@ describe('Notification ', () => {
     const notification = new Notification({
       content: new Content('Nova solicitação de amizade'),
       category: 'social',
-      recipientId: 'example',
+      recipientId: randomUUID(),
     });
 
     expect(notification).toBeTruthy();

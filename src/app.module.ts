@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { NotificationsModule } from 'src/infra/notifications/notifications.module';
+import { HttpModule } from './infra/http/http.module';
 
 @Module({
-  imports: [NotificationsModule],
+  imports: [HttpModule],
   controllers: [],
   providers: [],
 })
