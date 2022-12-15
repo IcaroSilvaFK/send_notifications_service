@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { SendNotification } from 'src/application/use-cases/send-notification';
+import { SendNotification } from '@application/use-cases/send-notification';
 import { CreateNotificationDto } from './DTOs/create-notification.dto';
 
 @Controller('notifications')
@@ -23,6 +23,14 @@ export class NotificationsController {
       recipientId,
     });
 
-    return { notification };
+    return {
+      notification: {
+        id: notification.id,
+        content: notification.content.value,
+        category: notification.category,
+        recipientId: notification.recipientId,
+        createdAt: notification.createdAt,
+      },
+    };
   }
 }
