@@ -16,4 +16,48 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
       data: raw,
     });
   }
+
+  async save(notification: Notification) {
+    const raw = PrismaNotificationMapper.toPrisma(notification);
+
+    await this.prismaService.notifications.update({
+      where: {
+        id: raw.id,
+      },
+      data: raw,
+    });
+  }
+
+  async findById(id: string): Promise<Notification | null> {
+    const notification = await this.prismaService.notifications.findUnique({
+      where: { id },
+    });
+
+    if (!notification) {
+      return null;
+    }
+
+    return PrismaNotificationMapper.toDomain(notification);
+  }
+
+  async countManyByRecipientId(recipientId: string): Promise<number> {
+    return await this.prismaService.notifications.count({
+      where: {
+        recipientId,
+      },
+    });
+  }
+
+  async findManyByRecipientId(recipientId: string): Promise<Notification[]> {
+    const allRecipientNotifications =
+      await this.prismaService.notifications.findMany({
+        where: { recipientId },
+      });
+
+    const notifications = allRecipientNotifications.map(
+      PrismaNotificationMapper.toDomain,
+    );
+
+    return notifications;
+  }
 }
